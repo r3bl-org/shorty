@@ -11,7 +11,7 @@ URL to the clipboard. It can be activated via a keyboard shortcut
 
 ## Resources
 
-- [Asynchronous Javascript](https://eloquentjavascript.net/11_async.html)
+- [Asynchronous Javascript (promises, async/await)](https://eloquentjavascript.net/11_async.html)
 - [Learn more about browser
 actions](https://developer.chrome.com/extensions/browserAction)
 - [Browser Action
