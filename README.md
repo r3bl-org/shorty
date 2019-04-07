@@ -5,6 +5,9 @@ URL in the address bar and shortens it (using tinyurl.com) and saves this short
 URL to the clipboard. It can be activated via a keyboard shortcut 
 `Ctrl + Shift + P`.
 
+You can install this extension from the [Chrome Web
+Store](https://chrome.google.com/webstore/detail/shorty/cbgcnhimnlnjejdopldfdicfingmaijg?hl=en-US&gl=US).
+
 ## Publish to the Chrome web store
 
 - [Step by step guide](https://developer.chrome.com/webstore/publish)
