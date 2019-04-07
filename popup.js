@@ -69,7 +69,7 @@ const createLinkElement = (text) => {
   const linkElement = document.createElement('a');
   const linkText = document.createTextNode(text);
   linkElement.appendChild(linkText);
-  linkElement.title = "Click to close popup";
+  linkElement.title = "URL copied to clipboard, click to close popup";
   linkElement.addEventListener('click', () => {
     window.close();
   });
@@ -78,10 +78,27 @@ const createLinkElement = (text) => {
 
 /** Replace the H1 element w/ a new H1 element that contains a link */
 const updateUIWithShortLink = (text) => {
+  // Create a H1 element.
   removeElement(document.querySelector('h1'));
   const element = document.createElement('h1');
   element.appendChild(createLinkElement(text));
   document.body.appendChild(element);
+
+  // Show toast.
+  showToast('URL copied to clipboard!');
+};
+
+/**
+ * More info: https://github.com/mlcheng/js-toast
+ * @param text
+ */
+const showToast = (text) => {
+  const options = {
+    settings: {
+      duration: AUTO_WINDOW_CLOSE_TIMEOUT_MS / 2
+    }
+  };
+  iqwerty.toast.Toast('URL copied to clipboard!', options);
 };
 
 /**
@@ -117,8 +134,8 @@ const removeElement = (element) => {
 };
 
 /** Set a timeout to close the window after short delay. */
+const AUTO_WINDOW_CLOSE_TIMEOUT_MS = 5000;
 const triggerAutoCloseWindowWithDelay = () => {
-  const AUTO_WINDOW_CLOSE_TIMEOUT_MS = 3000;
   setTimeout(() => {
     updateUI("Done!");
     window.close();
