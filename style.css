@@ -1,0 +1,6 @@
+h1 {
+    font-family: monospace;
+    border-radius: 3px;
+    border: 2px dotted cornflowerblue;
+    padding: 8px;
+}

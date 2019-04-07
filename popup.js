@@ -15,6 +15,15 @@
  */
 
 //
+// Main entry point.
+//
+
+/** Kick off the extension's main function every time the page loads. */
+document.addEventListener('DOMContentLoaded', () => {
+  shortenCurrentBrowserTabUrl();
+}, false);
+
+//
 // Helper functions.
 //
 
@@ -22,30 +31,57 @@
  * Can't use `window.location.href` since this is the URL of the popup.html.
  * Instead, get the current tab, and then get its URL.
  */
-const getCurrentBrowserUrl = () => {
-  // Get the currently selected tab
-  chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+const shortenCurrentBrowserTabUrl = () => {
+  // Get the currently selected tab.
+  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
     const current = tabs[0];
     const longUrl = current.url;
-    updateUI(longUrl);
-    fetchShortUrl(longUrl);
+    updateUI("Shortening URL ...");
+    makeNetworkRequest(longUrl);
   });
 };
 
 /**
- * Make a fetch call to tinyurl.com to shorten it.
+ * Make a fetch call to tinyurl.com to shorten it. When the response comes in
+ * update the UI and auto close the window.
  * More info: https://stackoverflow.com/questions/44123426/how-to-bypass-cors-for-chrome-extension
+ * More info: https://dev.to/johnpaulada/synchronous-fetch-with-asyncawait
  */
-const fetchShortUrl = (longUrl) => {
-  const tinyUrl = `https://tinyurl.com/api-create.php?url=${longUrl}`;
-  fetch(tinyUrl)
-    .then(function (response) {
-      return response.text();
-    })
-    .then(function (text) {
-      updateUI(`<a href=${text} target="_blank">${text}</a>`);
-      copyToClipboard(text);
-    });
+const makeNetworkRequest = (longUrl) => {
+  const makeAsyncRequest = async () => {
+    const tinyWebServiceUrl = `https://tinyurl.com/api-create.php?url=${longUrl}`;
+    const response = await fetch(tinyWebServiceUrl);
+    const shortUrlText = await response.text();
+    updateUIWithShortLink(shortUrlText);
+    copyToClipboard(shortUrlText);
+    triggerAutoCloseWindowWithDelay();
+  };
+  makeAsyncRequest();
+};
+
+/**
+ * Create a link element w/ the given text. This link has no target, but will
+ * close the current window when clicked.
+ * @param text
+ * @returns {HTMLAnchorElement}
+ */
+const createLinkElement = (text) => {
+  const linkElement = document.createElement('a');
+  const linkText = document.createTextNode(text);
+  linkElement.appendChild(linkText);
+  linkElement.title = "Click to close popup";
+  linkElement.addEventListener('click', () => {
+    window.close();
+  });
+  return linkElement;
+};
+
+/** Replace the H1 element w/ a new H1 element that contains a link */
+const updateUIWithShortLink = (text) => {
+  removeElement(document.querySelector('h1'));
+  const element = document.createElement('h1');
+  element.appendChild(createLinkElement(text));
+  document.body.appendChild(element);
 };
 
 /**
@@ -59,20 +95,32 @@ const copyToClipboard = (shortUrl) => {
   dummy.select();
   document.execCommand('copy');
   document.body.removeChild(dummy);
-  triggerAutoCloseWindowWithDelay();
 };
 
-/** Update the `#content` element of the HTML w/ the given text */
+/** Update the h1 element of the HTML w/ the given text */
 const updateUI = (text) => {
-  document.querySelector('#output').innerHTML = text;
+  // Remove the existing h1 element.
+  removeElement(document.querySelector('h1'));
+
+  // Add a new h1 element to DOM.
+  const element = document.createElement('h1');
+  element.innerText = text;
+  document.body.appendChild(element);
+  console.log(text);
 };
 
+/** Helper function to remove the given element (if it exists). */
+const removeElement = (element) => {
+  if (element) {
+    element.parentNode.removeChild(element);
+  }
+};
+
+/** Set a timeout to close the window after short delay. */
 const triggerAutoCloseWindowWithDelay = () => {
-  setTimeout()
+  const AUTO_WINDOW_CLOSE_TIMEOUT_MS = 3000;
+  setTimeout(() => {
+    updateUI("Done!");
+    window.close();
+  }, AUTO_WINDOW_CLOSE_TIMEOUT_MS);
 };
-
-//
-// Do the extension's main work.
-//
-
-getCurrentBrowserUrl();
