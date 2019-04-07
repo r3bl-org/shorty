@@ -23,13 +23,13 @@
  * Instead, get the current tab, and then get its URL.
  */
 const getCurrentBrowserUrl = () => {
-    // Get the currently selected tab
-    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-        const current = tabs[0];
-        const longUrl = current.url;
-        updateUI(longUrl);
-        fetchShortUrl(longUrl);
-    });
+  // Get the currently selected tab
+  chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+    const current = tabs[0];
+    const longUrl = current.url;
+    updateUI(longUrl);
+    fetchShortUrl(longUrl);
+  });
 };
 
 /**
@@ -37,15 +37,15 @@ const getCurrentBrowserUrl = () => {
  * More info: https://stackoverflow.com/questions/44123426/how-to-bypass-cors-for-chrome-extension
  */
 const fetchShortUrl = (longUrl) => {
-    const tinyUrl = `https://tinyurl.com/api-create.php?url=${longUrl}`;
-    fetch(tinyUrl)
-        .then(function (response) {
-            return response.text();
-        })
-        .then(function (text) {
-            updateUI(`<a href=${text} target="_blank">${text}</a>`);
-            copyToClipboard(text);
-        });
+  const tinyUrl = `https://tinyurl.com/api-create.php?url=${longUrl}`;
+  fetch(tinyUrl)
+    .then(function (response) {
+      return response.text();
+    })
+    .then(function (text) {
+      updateUI(`<a href=${text} target="_blank">${text}</a>`);
+      copyToClipboard(text);
+    });
 };
 
 /**
@@ -53,17 +53,22 @@ const fetchShortUrl = (longUrl) => {
  * More info: https://stackoverflow.com/questions/49618618/copy-current-url-to-clipboard
  */
 const copyToClipboard = (shortUrl) => {
-    const dummy = document.createElement('input');
-    document.body.appendChild(dummy);
-    dummy.value = shortUrl;
-    dummy.select();
-    document.execCommand('copy');
-    document.body.removeChild(dummy);
+  const dummy = document.createElement('input');
+  document.body.appendChild(dummy);
+  dummy.value = shortUrl;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  triggerAutoCloseWindowWithDelay();
 };
 
 /** Update the `#content` element of the HTML w/ the given text */
 const updateUI = (text) => {
-    document.querySelector('#output').innerHTML = text;
+  document.querySelector('#output').innerHTML = text;
+};
+
+const triggerAutoCloseWindowWithDelay = () => {
+  setTimeout()
 };
 
 //

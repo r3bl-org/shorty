@@ -23,6 +23,13 @@ action](https://stackoverflow.com/questions/18766886/unable-to-trigger-chrome-br
 defer](https://flaviocopes.com/javascript-async-defer/)
 - [Bypass CORS in Chrome
 Extension](https://stackoverflow.com/questions/44123426/how-to-bypass-cors-for-chrome-extension)
+    - The `manifest.json` needs to be updated as follows.
+    ```
+      "permissions": [
+        "activeTab",
+        "tabs",
+        "*://*.tinyurl.com/*"
+    ```
 - [Copy to
 clipboard](https://stackoverflow.com/questions/49618618/copy-current-url-to-clipboard)
 
