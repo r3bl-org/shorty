@@ -1,8 +1,9 @@
 {
+  "manifest_version": 3,
   "name": "Shorty",
   "description": "URL Shortener",
-  "version": "1.0",
-  "browser_action": {
+  "version": "2.0",
+  "action": {
     "default_title": "Click to shorten URL",
     "default_popup": "popup.html",
     "default_icon": {
@@ -12,7 +13,6 @@
       "128": "icon128.png"
     }
   },
-  "manifest_version": 2,
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
@@ -22,15 +22,12 @@
       "description": "Shortens URL in address bar"
     }
   },
-  "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
-  },
   "permissions": [
+    "clipboardWrite",
     "activeTab",
-    "tabs",
+    "tabs"
+  ],
+  "host_permissions": [
     "*://*.tinyurl.com/*"
   ]
 }
