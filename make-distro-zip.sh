@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-zip shorty.zip *html *css *js *png *json
+zip shorty.zip *html *css *js *png *json *svg
