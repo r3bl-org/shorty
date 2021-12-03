@@ -3,9 +3,15 @@
   "name": "Shorty",
   "description": "URL Shortener",
   "version": "2.0",
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
   "action": {
     "default_title": "Click to shorten URL",
-    "default_popup": "popup.html",
+    "default_popup": "index.html",
     "default_icon": {
       "16": "icon16.png",
       "32": "icon32.png",
@@ -22,12 +28,6 @@
       "description": "Shortens URL in address bar"
     }
   },
-  "permissions": [
-    "clipboardWrite",
-    "activeTab",
-    "tabs"
-  ],
-  "host_permissions": [
-    "*://*.tinyurl.com/*"
-  ]
+  "permissions": ["clipboardWrite", "activeTab", "tabs"],
+  "host_permissions": ["*://*.tinyurl.com/*"]
 }
