@@ -17,6 +17,7 @@ You can install this extension from the [Chrome Web Store][2021-12-02.store].
 - [Learn more about browser actions][2021-12-02.browser-actions]
 - [Browser Action Samples][2021-12-02.samples]
 - [SO article on browser action][2021-12-02.so-ba]
+- [Excessive permissions][2023-03-03.permissions]
 - [chrome.tabs][2021-12-02.tabs]
 - [Script loading and async and defer][2021-12-02.script]
 - [Bypass CORS in Chrome Extension][2021-12-02.bypass]
@@ -42,4 +43,5 @@ You can install this extension from the [Chrome Web Store][2021-12-02.store].
 [2021-12-02.script]: https://flaviocopes.com/javascript-async-defer/
 [2021-12-02.bypass]: https://stackoverflow.com/questions/44123426/how-to-bypass-cors-for-chrome-extension
 [2021-12-02.copy]: https://stackoverflow.com/questions/49618618/copy-current-url-to-clipboard
+[2023-03-03.permissions]: https://developer.chrome.com/docs/webstore/troubleshooting/#excessive-permissions
 <!-- prettier-ignore-end -->
